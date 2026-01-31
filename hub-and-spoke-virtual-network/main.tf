@@ -1,6 +1,6 @@
 # create a resource group for network infrastructure
 resource "azurerm_resource_group" "hubspoke_rg" {
-  name     = "rg-${var.hub_workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-001"
+  name     = "rg-${var.resource_group_workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-001"
   location = var.location
   tags     = var.tags
 }

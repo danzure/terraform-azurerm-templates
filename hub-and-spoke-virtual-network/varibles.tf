@@ -5,15 +5,15 @@ variable "bas_address_prefix" {
 }
 
 variable "bas_sku" {
-  description = "The Azure bastion SKU used for the hub virtual network"
-  type = string
-  default = "Standard" # [Basic, Standard, Premium]
+  description = "The SKU for Azure Bastion used in the hub virtual network (e.g., 'Basic', 'Standard', 'Premium')."
+  type        = string
+  default     = "Standard" # [Basic, Standard, Premium]
 }
 
 variable "bas_ip_sku_tier" {
-  description = "value"
-  type = string
-  default = "Regional" # [Regional, Global]
+  description = "The tier of the public IP address SKU used for Azure Bastion (e.g., 'Regional' or 'Global')."
+  type        = string
+  default     = "Regional" # [Regional, Global]
 }
 
 variable "environment" {
@@ -29,9 +29,9 @@ variable "firewall_address_prefix" {
 }
 
 variable "firewall_sku" {
-  description = "The SKU of Azure firewall to be deployed to the hub virtual network"
-  type = string
-  default = "Basic" #[Basic, Standard, Premium]
+  description = "The SKU for Azure Firewall to be deployed in the hub virtual network (e.g., 'Basic', 'Standard', 'Premium')."
+  type        = string
+  default     = "Basic" #[Basic, Standard, Premium]
 }
 
 variable "hub_subnet_address_prefix" {
@@ -56,6 +56,12 @@ variable "location" {
   description = "The Azure region where the resources will be deployed (e.g., 'uksouth', 'eastus'). This value is used in resource naming and may be abbreviated (e.g., 'uksouth' to 'uks' - see locals.tf for specific abbreviation logic)."
   type        = string
   default     = "uksouth"
+}
+
+variable "resource_group_workload" {
+  description = "The name of the workload for the resource group (e.g., 'network', 'infra')."
+  type        = string
+  default     = "infra"
 }
 
 variable "spoke_count" {
@@ -109,7 +115,7 @@ variable "tags" {
 }
 
 variable "workload" {
-  description = "A descriptive name for the overall workload or application stack being deployed (e.g., 'spoke', 'services'). This names the resource group"
+  description = "A descriptive name for the overall workload or application stack being deployed (e.g., 'spoke', 'services'). This names the resource group."
   type        = string
   default     = "hubspoke"
 }
