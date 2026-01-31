@@ -8,7 +8,6 @@ resource "azurerm_resource_group" "hubspoke_rg" {
 # create the hub virtual network
 resource "azurerm_virtual_network" "hub_vnet" {
   name                = "vnet-${var.hub_workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-001"
-  
   location            = azurerm_resource_group.hubspoke_rg.location
   resource_group_name = azurerm_resource_group.hubspoke_rg.name
   address_space       = var.hub_vnet_address_space
