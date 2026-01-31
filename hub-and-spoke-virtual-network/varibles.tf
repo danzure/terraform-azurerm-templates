@@ -4,6 +4,18 @@ variable "bas_address_prefix" {
   default     = "10.0.0.192/26"
 }
 
+variable "bas_sku" {
+  description = "The Azure bastion SKU used for the hub virtual network"
+  type = string
+  default = "Standard" # [Basic, Standard, Premium]
+}
+
+variable "bas_ip_sku_tier" {
+  description = "value"
+  type = string
+  default = "Regional" # [Regional, Global]
+}
+
 variable "environment" {
   description = "The deployment environment (e.g., 'development', 'staging', 'production'). This value is used in resource naming conventions and may be abbreviated (e.g., 'development' to 'dev' - see locals.tf for specific abbreviation logic)."
   type        = string
@@ -14,6 +26,12 @@ variable "firewall_address_prefix" {
   description = "The CIDR block for the Azure Firewall subnet (AzureFirewallSubnet). Must be /26 as per Azure requirements."
   type        = string
   default     = "10.0.0.128/26"
+}
+
+variable "firewall_sku" {
+  description = "The SKU of Azure firewall to be deployed to the hub virtual network"
+  type = string
+  default = "Basic" #[Basic, Standard, Premium]
 }
 
 variable "hub_subnet_address_prefix" {
