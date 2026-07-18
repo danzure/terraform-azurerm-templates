@@ -127,14 +127,14 @@ variable "network_tags" {
   default = {
     Deployment  = "Terraform"
     Workload    = "Infrastructure"
-    Environment = "Dev"
+    Environment = "Development"
   }
 }
 
 variable "network_workload" {
   description = "Workload or application name used for naming network resources."
   type        = string
-  default     = "infra"
+  default     = "network"
 }
 
 variable "os_disk_type" {
@@ -188,7 +188,7 @@ variable "vnet_address_space" {
 variable "workload" {
   description = "Workload or application name for resources."
   type        = string
-  default     = "tfavd"
+  default     = "tfrmavd"
 }
 
 variable "workspace_friendly_name" {
