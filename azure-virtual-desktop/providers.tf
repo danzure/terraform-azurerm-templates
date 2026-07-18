@@ -3,13 +3,13 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "4.46.0"
+      version = "4.81.0"
     }
   }
 
   # set the hashicorp HCP terraform organisation + workspace for remote state file
   cloud {
-    organization = "danzure-org"
+    organization = "atozazure"
     workspaces {
       name = "azure-virtual-desktop"
     }

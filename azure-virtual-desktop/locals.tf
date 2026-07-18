@@ -21,9 +21,9 @@ locals {
 # create local map of envrionemt abbriviations
 locals {
   envrionment_abbr = {
-    "prod" = "p"
-    "uat"  = "u"
-    "dev"  = "d"
+    "prod" = "prod"
+    "uat"  = "uat"
+    "dev"  = "dev"
   }
   # function to generate the envrionment abbriviation 
   generate_env_name = {
