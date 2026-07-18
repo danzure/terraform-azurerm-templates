@@ -59,11 +59,6 @@ output "profile_storage_share" {
   value       = azurerm_storage_account.sa_fslogix.name
 }
 
-output "app_storage_share" {
-  description = "Outputs the name of the storage account for MSIXAPP"
-  value       = azurerm_storage_account.sa_msixapp.name
-}
-
 output "resource_tags" {
   description = "Outputs the tags that will be applied to the avd resources"
   value       = var.avd_tags

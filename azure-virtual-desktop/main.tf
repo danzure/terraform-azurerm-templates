@@ -1,7 +1,7 @@
 # Resource Group
 
 resource "azurerm_resource_group" "avd_rg" {
-  name     = "rg-${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name     = "rg-${var.workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   location = var.location
   tags     = var.avd_tags
 
@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "avd_rg" {
 resource "azurerm_virtual_desktop_workspace" "avd_vdws" {
   resource_group_name = azurerm_resource_group.avd_rg.name
   location            = azurerm_resource_group.avd_rg.location
-  name                = "vdws-${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name                = "vdws-${var.workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   friendly_name       = var.workspace_friendly_name
   description         = "${var.workload}-avd-workspace"
   tags                = var.avd_tags
@@ -30,7 +30,7 @@ resource "azurerm_virtual_desktop_workspace" "avd_vdws" {
 resource "azurerm_virtual_desktop_host_pool" "avd_vdpool" {
   resource_group_name = azurerm_resource_group.avd_rg.name
   location            = azurerm_resource_group.avd_rg.location
-  name                = "vdpool-${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name                = "vdpool-${var.workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   friendly_name       = "${var.workload}-hostpool"
   description         = "Hostpool for ${var.workload}"
   tags                = var.avd_tags
@@ -72,7 +72,7 @@ resource "azurerm_virtual_desktop_application_group" "avd_dag" {
   resource_group_name = azurerm_resource_group.avd_rg.name
   location            = azurerm_resource_group.avd_rg.location
   host_pool_id        = azurerm_virtual_desktop_host_pool.avd_vdpool.id
-  name                = "vdag-${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name                = "vdag-${var.workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   friendly_name       = "${var.workload}-Desktop"
   description         = "${var.workload} Desktop Application Group"
   type                = "Desktop"

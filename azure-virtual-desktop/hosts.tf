@@ -26,16 +26,16 @@ resource "azurerm_network_interface" "host_nic" {
 # Virtual Machine Host(s)
 
 resource "azurerm_windows_virtual_machine" "avd_host" {
-  count                 = var.rdsh_count
-  name                  = format("${var.prefix}-host-%03d", count.index + 1)
-  location              = azurerm_resource_group.avd_rg.location
-  resource_group_name   = azurerm_resource_group.avd_rg.name
-  network_interface_ids = [azurerm_network_interface.host_nic.*.id[count.index]]
-  size                  = var.vm_size
-  provision_vm_agent    = true
+  count                     = var.rdsh_count
+  name                      = format("${var.prefix}-host-%03d", count.index + 1)
+  location                  = azurerm_resource_group.avd_rg.location
+  resource_group_name       = azurerm_resource_group.avd_rg.name
+  network_interface_ids     = [azurerm_network_interface.host_nic.*.id[count.index]]
+  size                      = var.vm_size
+  provision_vm_agent        = true
   automatic_updates_enabled = false
-  patch_assessment_mode = "ImageDefault"
-  patch_mode            = var.host_patch_mode
+  patch_assessment_mode     = "ImageDefault"
+  patch_mode                = var.host_patch_mode
 
   admin_username = var.admin_username
   admin_password = var.admin_password
@@ -48,9 +48,12 @@ resource "azurerm_windows_virtual_machine" "avd_host" {
   }
 
   source_image_reference {
+    # NOTE: Verify the AVD Windows 11 SKU in your region. Common AVD SKUs include:
+    #   - "win11-24h2-avd"
+    # If you need to change the image SKU, update the value below.
     publisher = "MicrosoftWindowsDesktop"
     offer     = "Windows-11"
-    sku       = "win11-25h2-avd"
+    sku       = "win11-24h2-avd"
     version   = "latest"
   }
 
@@ -98,7 +101,6 @@ resource "azurerm_virtual_machine_extension" "domain_join" {
   publisher                   = "Microsoft.Compute"
   type                        = "JsonADDomainExtension"
   type_handler_version        = "1.3"
-  automatic_upgrade_enabled   = true
   failure_suppression_enabled = true
 
   settings = <<SETTINGS

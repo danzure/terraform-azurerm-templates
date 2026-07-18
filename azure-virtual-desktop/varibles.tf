@@ -65,7 +65,13 @@ variable "environment" {
 
 variable "fsl_quota" {
   description = "Storage quota in GB for the FSLogix file share."
-  default     = "5"
+  type        = number
+  default     = 100
+
+  validation {
+    condition     = var.fsl_quota >= 100
+    error_message = "The FSLogix share quota must be at least 100 GB for Premium FileStorage accounts."
+  }
 }
 
 variable "host_disk_size" {
@@ -116,11 +122,6 @@ variable "log_analytics_sku" {
   default     = "PerGB2018"
 }
 
-variable "msix_quota" {
-  description = "Storage quota in GB for the MSIX app attach file share."
-  default     = "5"
-}
-
 variable "network_tags" {
   description = "Tags applied to network infrastructure resources."
   default = {
@@ -155,7 +156,7 @@ variable "rdsh_count" {
 
 variable "rfc3339time" {
   description = "Expiration date and time for the host registration token (RFC3339 format)."
-  default     = "2025-09-20T23:40:52Z"
+  default     = "2026-07-30T20:00:00Z"
 }
 
 variable "snet_address_prefix" {
@@ -173,9 +174,9 @@ variable "storage_account_tags" {
 }
 
 variable "vm_size" {
-  description = "Azure VM size for session hosts (e.g., Standard_B2s)."
+  description = "Azure VM size for session hosts (e.g., D2als_v6)."
   type        = string
-  default     = "Standard_B2s"
+  default     = "Standard_D2als_v6"
 }
 
 variable "vnet_address_space" {

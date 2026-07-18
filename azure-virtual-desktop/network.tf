@@ -1,6 +1,6 @@
 # create a resource group for network infrastructure
 resource "azurerm_resource_group" "network_rg" {
-  name     = "rg-${var.network_workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name     = "rg-${var.network_workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   location = var.location
   tags     = var.network_tags
 
@@ -14,7 +14,7 @@ resource "azurerm_virtual_network" "vnet" {
   resource_group_name = azurerm_resource_group.network_rg.name
   location            = azurerm_resource_group.network_rg.location
 
-  name          = "vnet-${var.network_workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name          = "vnet-${var.network_workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   address_space = [var.vnet_address_space]
   tags          = var.network_tags
 }
@@ -24,16 +24,16 @@ resource "azurerm_subnet" "avd_subnet" {
   resource_group_name  = azurerm_resource_group.network_rg.name
   virtual_network_name = azurerm_virtual_network.vnet.name
 
-  name             = "snet-${var.network_workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name             = "snet-${var.network_workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   address_prefixes = [var.snet_address_prefix]
 }
 
-# create a network security group (NSG) for the azure virtual desktop envrionment
+# create a network security group (NSG) for the azure virtual desktop environment
 resource "azurerm_network_security_group" "avd_nsg" {
   resource_group_name = azurerm_resource_group.avd_rg.name
   location            = azurerm_resource_group.avd_rg.location
 
-  name = "nsg-${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name = "nsg-${var.workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   tags = var.avd_tags
 }
 
@@ -59,22 +59,12 @@ resource "azurerm_network_security_rule" "nsg_rdp_rule" {
   destination_address_prefix = "*"
 }
 
-# create public ip address (PIP) for the nat gateway
-resource "azurerm_public_ip" "ngw_pip" {
-  resource_group_name = azurerm_resource_group.avd_rg.name
-  location            = azurerm_resource_group.avd_rg.location
-
-  name              = "pip-${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
-  allocation_method = "Static"
-  tags              = var.avd_tags
-}
-
 # create ip pirefix for NAT Gateway
 resource "azurerm_public_ip_prefix" "ngw_ippre" {
   resource_group_name = azurerm_resource_group.avd_rg.name
   location            = azurerm_resource_group.avd_rg.location
 
-  name = "ngw-${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name = "ippre-ngw-${var.workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   tags = var.avd_tags
 }
 
@@ -83,15 +73,9 @@ resource "azurerm_nat_gateway" "avd_ngw" {
   resource_group_name = azurerm_resource_group.avd_rg.name
   location            = azurerm_resource_group.avd_rg.location
 
-  name                    = "${var.workload}-${format("%s", local.generate_env_name.envrionment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
+  name                    = "ngw-${var.workload}-${format("%s", local.generate_env_name.environment)}-${format("%s", local.generate_loc_name.location)}-${var.instance_number}"
   idle_timeout_in_minutes = 10
   tags                    = var.avd_tags
-}
-
-# associate the public ip address to the the NAT Gateway
-resource "azurerm_nat_gateway_public_ip_association" "ngw_pip_attach" {
-  nat_gateway_id       = azurerm_nat_gateway.avd_ngw.id
-  public_ip_address_id = azurerm_public_ip.ngw_pip.id
 }
 
 # associate the ip prefix to the NAT Gateway

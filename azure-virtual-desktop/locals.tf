@@ -12,21 +12,21 @@ locals {
     "southeastasia"  = "sea"  # South East Asia [Asia]
     # add any addtional regions here 
   }
-  # funcation to generate the location abbriviation
+  # function to generate the location abbreviation
   generate_loc_name = {
     location = local.location_abbr[var.location]
   }
 }
 
-# create local map of envrionemt abbriviations
+# create local map of environment abbreviations
 locals {
-  envrionment_abbr = {
+  environment_abbr = {
     "prod" = "prod"
     "uat"  = "uat"
     "dev"  = "dev"
   }
-  # function to generate the envrionment abbriviation 
+  # function to generate the environment abbreviation
   generate_env_name = {
-    envrionment = local.envrionment_abbr[var.environment]
+    environment = local.environment_abbr[var.environment]
   }
 }
